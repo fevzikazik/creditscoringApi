@@ -42,7 +42,6 @@ with open(path_mapper_features, 'rb') as data:
     mapper_features = p.load(data)
 
 numerical_cols=['krediMiktari', 'yas', 'aldigi_kredi_sayi']
-
 categorical_cols=['evDurumu', 'telefonDurumu']
 
 """ sample_data={ 'krediMiktari': 4000,
