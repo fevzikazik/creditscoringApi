@@ -37,7 +37,7 @@ with open(path_y_train, 'rb') as data:
     y_train = p.load(data)
 
 # mapper_features
-path_mapper_features = os.path.join(os.path.dirname( __file__ ), 'Pickles/mapper_features.pickle')
+path_mapper_features = os.path.join(os.path.dirname( __file__ ), 'kredi/mapper_features.pickle')
 with open(path_mapper_features, 'rb') as data:
     mapper_features = p.load(data)
 
