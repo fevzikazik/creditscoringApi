@@ -8,30 +8,27 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, AdaBoostClassifier, BaggingClassifier
 
-from sklearn.preprocessing import LabelBinarizer
-from sklearn_pandas import DataFrameMapper
-
-from flask import Flask, request, redirect, url_for, flash, jsonify
+from flask import Flask, request, jsonify
 import os
-import pickle
+import pickle as p
 
 # Models
 path_models = os.path.join(os.path.dirname( __file__ ), 'models.pickle')
 with open(path_models, 'rb') as data:
-    models = pickle.load(data)
+    models = p.load(data)
 # X_train
 path_X_train = os.path.join(os.path.dirname( __file__ ), 'X_train.pickle')
 with open(path_X_train, 'rb') as data:
-    X_train = pickle.load(data)
+    X_train = p.load(data)
 # y_train
 path_y_train = os.path.join(os.path.dirname( __file__ ), 'y_train.pickle')
 with open(path_y_train, 'rb') as data:
-    y_train = pickle.load(data)
+    y_train = p.load(data)
 
 # mapper_features
 path_mapper_features = os.path.join(os.path.dirname( __file__ ), 'mapper_features.pickle')
 with open(path_mapper_features, 'rb') as data:
-    mapper_features = pickle.load(data)
+    mapper_features = p.load(data)
 
 numerical_cols=['krediMiktari', 'yas', 'aldigi_kredi_sayi']
 
