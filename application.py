@@ -8,20 +8,20 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, AdaBoostClassifier, BaggingClassifier
 
+import pickle as p
 from flask import Flask, request, jsonify
 import os
-import pickle as p
 
 # Models
-path_models = os.path.join(os.path.dirname( __file__ ), 'Pickles/models.pickle')
+path_models = os.path.join(os.path.dirname( __file__ ), 'kredi/models.pickle')
 with open(path_models, 'rb') as data:
     models = p.load(data)
 # X_train
-path_X_train = os.path.join(os.path.dirname( __file__ ), 'Pickles/X_train.pickle')
+path_X_train = os.path.join(os.path.dirname( __file__ ), 'kredi/X_train.pickle')
 with open(path_X_train, 'rb') as data:
     X_train = p.load(data)
 # y_train
-path_y_train = os.path.join(os.path.dirname( __file__ ), 'Pickles/y_train.pickle')
+path_y_train = os.path.join(os.path.dirname( __file__ ), 'kredi/y_train.pickle')
 with open(path_y_train, 'rb') as data:
     y_train = p.load(data)
 
