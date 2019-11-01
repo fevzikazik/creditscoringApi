@@ -7,15 +7,26 @@ from sklearn.svm import SVR
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, AdaBoostClassifier, BaggingClassifier
-
+from sklearn.model_selection import GridSearchCV
 import pickle as p
 from flask import Flask, request, jsonify
 import os
 
-# Models
-path_models = os.path.join(os.path.dirname( __file__ ), 'kredi/models.pickle')
-with open(path_models, 'rb') as data:
-    models = p.load(data)
+# Modelleri Hazırlayalım
+models = []
+models.append(('Logistic Regression', LogisticRegression()))
+models.append(('GradientBoosting', GradientBoostingClassifier(n_estimators=100)))
+models.append(('Naive Bayes', GaussianNB()))
+models.append(('Decision Tree (NoParam)', DecisionTreeClassifier())) 
+models.append(('Decision Tree (GridSearch)', GridSearchCV(DecisionTreeClassifier(), {'max_depth':[5, 10, 15, 20, 25, 32]}, cv=5)))
+models.append(('RandomForestClassifier (GridSearch)', GridSearchCV(RandomForestClassifier(), {'max_depth':[5, 15], 'n_estimators':[10,30]})))
+models.append(('RandomForestClassifier (2 Param)', RandomForestClassifier(n_estimators=10, criterion='entropy')))
+models.append(('KNeighborsClassifier', KNeighborsClassifier(n_neighbors=5, metric='minkowski')))
+# models.append(('Support Vector Regression', SVR(kernel='rbf')))
+models.append(('LinearDiscriminantAnalysis', LinearDiscriminantAnalysis()))
+models.append(('AdaBoostClassifier', AdaBoostClassifier(learning_rate=0.5)))
+models.append(('BaggingClassifier', BaggingClassifier()))
+
 # X_train
 path_X_train = os.path.join(os.path.dirname( __file__ ), 'kredi/X_train.pickle')
 with open(path_X_train, 'rb') as data:
