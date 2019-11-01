@@ -15,33 +15,23 @@ from flask import Flask, request, redirect, url_for, flash, jsonify
 import os
 import pickle
 
-class MyCustomUnpickler(pickle.Unpickler):
-    def find_class(self, module, name):
-        if module == "__main__":
-            module = "program"
-        return super().find_class(module, name)
-
 # Models
 path_models = os.path.join(os.path.dirname( __file__ ), 'models.pickle')
 with open(path_models, 'rb') as data:
-    unpickler = MyCustomUnpickler(data)
-    models = unpickler.load()
+    models = pickle.load(data)
 # X_train
 path_X_train = os.path.join(os.path.dirname( __file__ ), 'X_train.pickle')
 with open(path_X_train, 'rb') as data:
-    unpickler = MyCustomUnpickler(data)
-    X_train = unpickler.load()
+    X_train = pickle.load(data)
 # y_train
 path_y_train = os.path.join(os.path.dirname( __file__ ), 'y_train.pickle')
 with open(path_y_train, 'rb') as data:
-    unpickler = MyCustomUnpickler(data)
-    y_train = unpickler.load()
+    y_train = pickle.load(data)
 
 # mapper_features
 path_mapper_features = os.path.join(os.path.dirname( __file__ ), 'mapper_features.pickle')
 with open(path_mapper_features, 'rb') as data:
-    unpickler = MyCustomUnpickler(data)
-    mapper_features = unpickler.load()
+    mapper_features = pickle.load(data)
 
 numerical_cols=['krediMiktari', 'yas', 'aldigi_kredi_sayi']
 
