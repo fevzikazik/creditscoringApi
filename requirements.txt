@@ -1,0 +1,6 @@
+Flask
+numpy
+pickle-warehouse
+pandas
+scikit-learn
+sklearn_pandas
