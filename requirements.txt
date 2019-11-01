@@ -4,3 +4,4 @@ pickle-warehouse
 pandas
 scikit-learn
 sklearn_pandas
+cloudpickle
