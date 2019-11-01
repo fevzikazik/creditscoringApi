@@ -16,17 +16,21 @@ import os
 import pickle
 
 # Models
-with open("models.pickle", 'rb') as data:
+path_models = os.path.join(os.path.dirname( __file__ ), 'models.pickle')
+with open(path_models, 'rb') as data:
     models = pickle.load(data)
 # X_train
-with open("X_train.pickle", 'rb') as data:
+path_X_train = os.path.join(os.path.dirname( __file__ ), 'X_train.pickle')
+with open(path_X_train, 'rb') as data:
     X_train = pickle.load(data)
 # y_train
-with open("y_train.pickle", 'rb') as data:
+path_y_train = os.path.join(os.path.dirname( __file__ ), 'y_train.pickle')
+with open(path_y_train, 'rb') as data:
     y_train = pickle.load(data)
 
 # mapper_features
-with open("mapper_features.pickle", 'rb') as data:
+path_mapper_features = os.path.join(os.path.dirname( __file__ ), 'mapper_features.pickle')
+with open(path_mapper_features, 'rb') as data:
     mapper_features = pickle.load(data)
 
 numerical_cols=['krediMiktari', 'yas', 'aldigi_kredi_sayi']
