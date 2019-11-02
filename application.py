@@ -51,7 +51,6 @@ categorical_cols=['evDurumu', 'telefonDurumu']
              'evDurumu': 'evsahibi',
              'telefonDurumu': 'var'}
 """
-result_models = []
 def process(sample_data):
     data=list(sample_data.values())
     colz=list(sample_data.keys())
@@ -59,11 +58,9 @@ def process(sample_data):
     XX1=mapper_features.transform(dfx)
     XX2=dfx[numerical_cols]
     clean_sample = np.hstack((XX1,XX2))
-    
+    result_models = []
     for name, model in models:
         model = model.fit(X_train, y_train.ravel())
-        #model_name.append(name)
-        #acc_score_model.append(((model.predict_proba(clean_sample)[:,0][0])*100))
         result_models.append({ 'Model':name, 'Oran':(model.predict_proba(clean_sample)[:,0][0])*100 })
     
     return result_models
