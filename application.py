@@ -82,7 +82,7 @@ def home():
 def predict():
     data = request.get_json()
     response=process(data)
-    return jsonify(response.to_json())
+    return jsonify(response.to_json(orient='values'))
 
 if __name__ == '__main__':
     HOST = os.environ.get('SERVER_HOST', 'localhost')
