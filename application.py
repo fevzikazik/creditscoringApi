@@ -11,6 +11,7 @@ from sklearn.model_selection import GridSearchCV
 import pickle as p
 from flask import Flask, request, jsonify
 import os
+import json
 
 # Modelleri Hazırlayalım
 models = []
@@ -50,6 +51,7 @@ categorical_cols=['evDurumu', 'telefonDurumu']
              'evDurumu': 'evsahibi',
              'telefonDurumu': 'var'}
 """
+result_models = []
 def process(sample_data):
     data=list(sample_data.values())
     colz=list(sample_data.keys())
@@ -58,19 +60,13 @@ def process(sample_data):
     XX2=dfx[numerical_cols]
     clean_sample = np.hstack((XX1,XX2))
     
-    model_name = []
-    acc_score_model = []
-    
     for name, model in models:
         model = model.fit(X_train, y_train.ravel())
-        model_name.append(name)
-        acc_score_model.append(((model.predict_proba(clean_sample)[:,0][0])*100))
+        #model_name.append(name)
+        #acc_score_model.append(((model.predict_proba(clean_sample)[:,0][0])*100))
+        result_models.append({ 'Model':name, 'Oran':(model.predict_proba(clean_sample)[:,0][0])*100 })
     
-    columns = {'Model':model_name,'Oran':acc_score_model}
-    results = pd.DataFrame(data=columns)
-
-    results=results.sort_values('Oran', ascending=False)
-    return results
+    return result_models
 
 app = Flask(__name__)
 
@@ -82,7 +78,7 @@ def home():
 def predict():
     data = request.get_json()
     response=process(data)
-    return jsonify(response.to_json(orient='records'))
+    return jsonify(response)
 
 
 if __name__ == '__main__':
