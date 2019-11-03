@@ -12,16 +12,17 @@ import pickle as p
 from flask import Flask, request, jsonify
 import os
 import json
+import math
 
 # Modelleri Hazırlayalım
 models = []
-models.append(('Logistic Regression', LogisticRegression()))
+models.append(('LogisticRegression', LogisticRegression()))
 models.append(('GradientBoosting', GradientBoostingClassifier(n_estimators=100)))
-models.append(('Naive Bayes', GaussianNB()))
-models.append(('Decision Tree (NoParam)', DecisionTreeClassifier())) 
-models.append(('Decision Tree (GridSearch)', GridSearchCV(DecisionTreeClassifier(), {'max_depth':[5, 10, 15, 20, 25, 32]}, cv=5)))
-models.append(('RandomForestClassifier (GridSearch)', GridSearchCV(RandomForestClassifier(), {'max_depth':[5, 15], 'n_estimators':[10,30]})))
-models.append(('RandomForestClassifier (2 Param)', RandomForestClassifier(n_estimators=10, criterion='entropy')))
+models.append(('NaiveBayes', GaussianNB()))
+models.append(('DecisionTree(NoParam)', DecisionTreeClassifier())) 
+models.append(('DecisionTree(GridSearch)', GridSearchCV(DecisionTreeClassifier(), {'max_depth':[5, 10, 15, 20, 25, 32]}, cv=5)))
+models.append(('RandomForest(GridSearch)', GridSearchCV(RandomForestClassifier(), {'max_depth':[5, 15], 'n_estimators':[10,30]})))
+models.append(('RandomForest(2 Param)', RandomForestClassifier(n_estimators=10, criterion='entropy')))
 models.append(('KNeighborsClassifier', KNeighborsClassifier(n_neighbors=5, metric='minkowski')))
 # models.append(('Support Vector Regression', SVR(kernel='rbf')))
 models.append(('LinearDiscriminantAnalysis', LinearDiscriminantAnalysis()))
@@ -61,7 +62,9 @@ def process(sample_data):
     result_models = []
     for name, model in models:
         model = model.fit(X_train, y_train.ravel())
-        result_models.append({ 'Model':name, 'Oran':(model.predict_proba(clean_sample)[:,0][0])*100 })
+        acc_score = (model.predict_proba(clean_sample)[:,0][0])*100
+        acc_score = str(round(acc_score, 2))
+        result_models.append({ 'Model':name, 'Oran':acc_score })
     
     return result_models
 
